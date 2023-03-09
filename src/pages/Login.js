@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import styles from '../styles/login.module.css';
-import { login } from '../api';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { useAuth } from '../hooks';
 
 const Login = () => {
 
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
   const [loggingIn,setLoggingIn]=useState(false);
+  const auth=useAuth();
 
   const handleSubmit=async (e)=>{
     e.preventDefault();
 
     setLoggingIn(true);
     if(!email || !password){
-      return toast("Please enter both email and password")
+      return toast("Please enter both email and password");
     }
 
-    const response=await login(email,password);
+    const response=await auth.login(email,password);
     if(response.success){
       toast("Successfully logged in")
     }else{
