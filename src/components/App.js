@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+//import { useEffect, useState } from 'react';
 
-import { getPosts } from '../api';
+//import { getPosts } from '../api';
 import { Home,Login } from '../pages';
 import  Loader  from '../components/Loader';
 import Navbar from './Navbar';
 import { BrowserRouter as Router,Route,Switch } from 'react-router-dom';
 import Page404 from './Page404';
+import { useAuth } from '../hooks';
+import Signup from '../pages/Singup';
 
 const About=()=>{
   return <h1>About</h1>
@@ -16,10 +18,9 @@ const UserInfo=()=>{
 }
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const auth=useAuth();
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchPosts = async () => {
       const response = await getPosts();
 
@@ -31,9 +32,9 @@ function App() {
     };
 
     fetchPosts();
-  }, []);
+  }, []);*/
 
-  if (loading) {
+  if (auth.loading) {
     return <Loader />;
   }
 
@@ -43,7 +44,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path='/'>
-        <Home posts={posts} />
+        <Home />
         </Route>
         <Route exact path='/about'>
         <About />
@@ -53,6 +54,9 @@ function App() {
         </Route>
         <Route exact path='/login'>
         <Login />
+        </Route>
+        <Route exact path='/register'>
+        <Signup />
         </Route>
         <Route>
           <Page404 />

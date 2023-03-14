@@ -1,10 +1,32 @@
 import PropTypes from 'prop-types';
-
+import { useEffect, useState } from 'react';
+import Loader from '../components/Loader';
 import { Comment } from '../components';
 import styles from '../styles/home.module.css';
+import { getPosts } from '../api';
 
-const Home = ({ posts }) => {
-  console.log(posts);
+const Home = () => {
+  const [posts,setPosts]=useState([]);
+  const [loading,setLoading]=useState(true)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await getPosts();
+
+      if (response.success) {
+        setPosts(response.data.posts);
+      }
+
+      setLoading(false);
+    };
+
+    fetchPosts();
+  }, [])
+
+  if(loading){
+    return <Loader/>
+  }
+
   return (
     <div className={styles.postsList}>
       {posts.map((post) => (
@@ -12,7 +34,7 @@ const Home = ({ posts }) => {
           <div className={styles.postHeader}>
             <div className={styles.postAvatar}>
               <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                src="https://cdn-icons-png.flaticon.com/128/2202/2202112.png"
                 alt="user-pic"
               />
               <div>
@@ -25,7 +47,7 @@ const Home = ({ posts }) => {
             <div className={styles.postActions}>
               <div className={styles.postLike}>
                 <img
-                  src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
+                  src="https://cdn-icons-png.flaticon.com/128/126/126473.png"
                   alt="likes-icon"
                 />
                 <span>5</span>
@@ -33,7 +55,7 @@ const Home = ({ posts }) => {
 
               <div className={styles.postCommentsIcon}>
                 <img
-                  src="https://image.flaticon.com/icons/svg/1380/1380338.svg"
+                  src="https://cdn-icons-png.flaticon.com/128/1380/1380338.png"
                   alt="comments-icon"
                 />
                 <span>{post.comments.length}</span>
