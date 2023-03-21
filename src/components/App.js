@@ -1,7 +1,7 @@
 //import { useEffect, useState } from 'react';
 
 //import { getPosts } from '../api';
-import { Home,Login } from '../pages';
+import { Home,Login, Settings } from '../pages';
 import  Loader  from '../components/Loader';
 import Navbar from './Navbar';
 import { BrowserRouter as Router,Route,Switch } from 'react-router-dom';
@@ -57,6 +57,9 @@ function App() {
         </Route>
         <Route exact path='/register'>
         <Signup />
+        </Route>
+        <Route exact path='/setting'>
+        <Settings />
         </Route>
         <Route>
           <Page404 />
