@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from '../styles/login.module.css';
 import { toast } from 'react-toastify';
 import { useAuth } from '../hooks';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
 
@@ -26,6 +27,10 @@ const Login = () => {
     }
 
     setLoggingIn(false);
+  }
+
+  if(auth.user){
+    return <Redirect to="/" />
   }
 
   return (
